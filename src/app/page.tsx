@@ -9,7 +9,7 @@ export default function Home() {
     const [roughStyle, setRoughStyle] = useState<RoughStyle>({
         roughness: 1,
         seed: 1,
-        multistroke: true
+        multistroke: false
     })
     const handleChangeRougness = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {

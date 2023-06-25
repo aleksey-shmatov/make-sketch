@@ -128,12 +128,26 @@ const applyStyles = (
     options: Options | null
 ) => {
     let copy: SVGElement
-    console.log(element.tagName)
     if (styledElements.has(element.tagName)) {
         if (roughContext) {
             const renderer = roughRenderers[element.tagName] as any
-            let newOptions = options
+            const stroke = getComputedStyle(element).stroke
+            const fill = getComputedStyle(element).fill
+            const strokeWidth = parseFloat(getComputedStyle(element).strokeWidth)
+            console.log(stroke)
+            let newOptions = {...options, stroke, fill, fillStyle: 'solid', strokeWidth}
+
             copy = renderer(element, roughContext, newOptions, 1, 1)
+
+            for (const attr of element.getAttributeNames()) {
+                if (attr === 'd') {
+                    continue
+                }
+                const value = element.getAttribute(attr)
+                if (value) {
+                    copy.setAttribute(attr, value)
+                }
+            }
         } else {
             copy = document.createElementNS('http://www.w3.org/2000/svg', 'g')
             const elementCopy = element.cloneNode() as SVGElement
