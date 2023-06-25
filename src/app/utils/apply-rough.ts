@@ -134,7 +134,6 @@ const applyStyles = (
             const stroke = getComputedStyle(element).stroke
             const fill = getComputedStyle(element).fill
             const strokeWidth = parseFloat(getComputedStyle(element).strokeWidth)
-            console.log(stroke)
             let newOptions = {...options, stroke, fill, fillStyle: 'solid', strokeWidth}
 
             copy = renderer(element, roughContext, newOptions, 1, 1)

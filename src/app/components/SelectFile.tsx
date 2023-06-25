@@ -5,16 +5,6 @@ type Props = {
     onSelect: (markup: string) => void;
 }
 
-DOMPurify.setConfig({
-    ADD_TAGS: ['svg', 'use'],
-    ADD_ATTR: ['xlink', 'xlink:href', 'href']
-});
-
-DOMPurify.addHook('afterSanitizeAttributes', function (node) {
-    if (node.hasAttribute('xlink:href') && !node.getAttribute('xlink:href')?.match(/^#/)) {
-        node.remove();
-    }
-});
 
 export const SelectFile = ({ onSelect }: Props) => {
     const handleSelectFile = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -23,6 +13,16 @@ export const SelectFile = ({ onSelect }: Props) => {
             const reader = new FileReader();
             reader.onload = (e) => {
                 const text = e.target?.result as string;
+                DOMPurify.setConfig({
+                    ADD_TAGS: ['svg', 'use'],
+                    ADD_ATTR: ['xlink', 'xlink:href', 'href']
+                });
+
+                DOMPurify.addHook('afterSanitizeAttributes', function (node) {
+                    if (node.hasAttribute('xlink:href') && !node.getAttribute('xlink:href')?.match(/^#/)) {
+                        node.remove();
+                    }
+                });
                 const purifiedText = DOMPurify.sanitize(text)
                 onSelect(purifiedText)
             };
