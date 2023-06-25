@@ -128,6 +128,7 @@ const applyStyles = (
     options: Options | null
 ) => {
     let copy: SVGElement
+    console.log(element.tagName)
     if (styledElements.has(element.tagName)) {
         if (roughContext) {
             const renderer = roughRenderers[element.tagName] as any
