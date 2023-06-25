@@ -25,7 +25,7 @@ const styleToRoughOptions = ({  rough }: Styles): Options => ({
     seed: rough.seed,
     preserveVertices: true,
     curveFitting: 1,
-    disableMultiStroke: rough.multistroke,
+    disableMultiStroke: !rough.multistroke,
 })
 
 const roughRenderers: any = {
